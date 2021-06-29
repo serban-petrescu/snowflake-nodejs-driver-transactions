@@ -46,9 +46,11 @@ async function dropTable(connection: Connection): Promise<void> {
 async function runTest(connection: Connection): Promise<void> {
     await createTable(connection);
     try {
+        await executeStatement(connection, 'BEGIN;');
         await executeStatement(connection, 'INSERT INTO example VALUES (1);');
         await executeStatement(connection, 'INSERT INTO example VALUES (2);');
         await executeStatement(connection, 'COMMIT;');
+        await executeStatement(connection, 'BEGIN;');
         await executeStatement(connection, 'INSERT INTO example VALUES (3);');
         await executeStatement(connection, 'INSERT INTO example VALUES (4);');
         await executeStatement(connection, "INSERT INTO example VALUES ('ASD');");
