@@ -43,14 +43,14 @@ async function dropTable(connection: Connection): Promise<void> {
     await executeStatement(connection, 'DROP TABLE example;');
 }
 
-async function runTest(connection: Connection): Promise<void> {
+async function runTest(connection: Connection, begin?: boolean): Promise<void> {
     await createTable(connection);
     try {
-        await executeStatement(connection, 'BEGIN;');
+        begin && await executeStatement(connection, 'BEGIN;');
         await executeStatement(connection, 'INSERT INTO example VALUES (1);');
         await executeStatement(connection, 'INSERT INTO example VALUES (2);');
         await executeStatement(connection, 'COMMIT;');
-        await executeStatement(connection, 'BEGIN;');
+        begin && await executeStatement(connection, 'BEGIN;');
         await executeStatement(connection, 'INSERT INTO example VALUES (3);');
         await executeStatement(connection, 'INSERT INTO example VALUES (4);');
         await executeStatement(connection, "INSERT INTO example VALUES ('ASD');");
@@ -74,8 +74,12 @@ async function main() {
     console.log('Running the test with the default connection.');
     await runTest(connection);
     console.log('');
+    
+    console.log('Running the test with the default connection and BEGINs.');
+    await runTest(connection, true);
+    console.log('');
 
-    console.log('Running the test without autocommit.');
+    console.log('Running the test without autocommit or BEGINs.');
     await executeStatement(connection, 'ALTER SESSION SET AUTOCOMMIT = FALSE;');
     await runTest(connection);
 }
