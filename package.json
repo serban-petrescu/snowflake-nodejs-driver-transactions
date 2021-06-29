@@ -1,0 +1,21 @@
+{
+  "name": "snowflake-nodejs-transactions-poc",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node -r ts-node/register index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^15.0.1",
+    "@types/snowflake-sdk": "^1.5.1",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "dotenv": "^8.5.1",
+    "snowflake-sdk": "^1.6.1"
+  }
+}
